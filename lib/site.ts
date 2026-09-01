@@ -5,3 +5,10 @@ export const serviceLinks = [
   { href: '/brigada-kamenshchikov', label: 'Бригада каменщиков' },
   { href: '/brigada-fasadchikov', label: 'Бригада фасадчиков' },
 ];
+
+export const regionalLinks = [
+  { href: '/kladka-gazobloka-sevastopol', label: 'Кладка газоблока в Севастополе' },
+  { href: '/fasadnye-raboty-sevastopol', label: 'Фасадные работы в Севастополе' },
+  { href: '/kladka-gazobloka-krym', label: 'Кладка газоблока в Крыму' },
+  { href: '/fasadnye-raboty-krym', label: 'Фасадные работы в Крыму' },
+];

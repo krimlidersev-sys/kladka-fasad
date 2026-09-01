@@ -12,6 +12,8 @@ export type ServicePageData = {
   scopes: Array<{ title: string; text: string }>;
   process: Array<{ title: string; text: string }>;
   faq: Array<{ question: string; answer: string }>;
+  areaServed?: string[];
+  related?: Array<{ href: string; label: string }>;
 };
 
 export function ServicePage({ data }: { data: ServicePageData }) {
@@ -27,6 +29,10 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         provider: { '@type': 'Organization', name: siteName, url: siteUrl },
         description: data.description,
         url: pageUrl,
+        areaServed: (data.areaServed ?? ['Севастополь', 'Республика Крым']).map((name) => ({
+          '@type': 'AdministrativeArea',
+          name,
+        })),
         audience: { '@type': 'BusinessAudience', audienceType: 'Генеральные подрядчики и застройщики' },
       },
       {
@@ -53,7 +59,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
       <header className="sticky top-0 z-40 border-b border-[#dedee0] bg-[#efefef]/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-5 sm:px-8">
           <Link href="/" className="flex items-center gap-3" aria-label="На главную">
-            <span className="grid size-9 place-items-center rounded-xl bg-primary text-sm font-black text-[#2a2a2c] shadow-[0_4px_16px_rgba(255,214,0,.28)]">101</span>
+            <img src="/logo-101.png" alt="101" width="36" height="36" className="size-9 rounded-xl shadow-[0_4px_16px_rgba(255,214,0,.28)]" />
             <span><span className="block text-[15px] font-bold leading-none">КЛАДКА / ФАСАД</span><span className="mt-1 block text-[10px] text-[#77777b]">команда 101</span></span>
           </Link>
           <Link href="/#calculation" className="soft-transition flex items-center gap-2 rounded-lg bg-[#2a2a2c] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#414145]">
@@ -137,12 +143,21 @@ export function ServicePage({ data }: { data: ServicePageData }) {
             <div><p className="text-xl font-semibold">Есть проект или ведомость объёмов?</p><p className="mt-1 text-sm text-muted-foreground">Загрузите файл и получите предметный расчёт.</p></div>
             <Link href="/#calculation" className="soft-transition inline-flex h-12 shrink-0 items-center gap-2 rounded-lg bg-[#2a2a2c] px-5 text-sm font-medium text-white hover:bg-[#414145]">Рассчитать объект <ArrowRight className="size-4" /></Link>
           </div>
+          {data.related && data.related.length > 0 && (
+            <nav className="mt-8 flex flex-wrap gap-2" aria-label="Связанные услуги">
+              {data.related.map((item) => (
+                <Link key={item.href} href={item.href} className="rounded-full border border-[#d8d8db] px-4 py-2 text-sm text-[#555559] hover:border-[#2a2a2c] hover:text-[#2a2a2c]">
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          )}
         </div>
       </section>
 
       <footer className="bg-[#efefef]">
         <div className="mx-auto flex max-w-[1180px] flex-col gap-4 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <div className="flex items-center gap-3 text-sm font-semibold"><span className="grid size-8 place-items-center rounded-lg bg-primary text-xs font-black">101</span>КЛАДКА / ФАСАД <span className="font-normal text-[#8a8a8e]">— команда 101</span></div>
+          <div className="flex items-center gap-3 text-sm font-semibold"><img src="/logo-101.png" alt="101" width="32" height="32" className="size-8 rounded-lg" />КЛАДКА / ФАСАД <span className="font-normal text-[#8a8a8e]">— команда 101</span></div>
           <Link href="/" className="text-xs text-[#6f6f73] hover:text-[#2a2a2c]">Все услуги и калькулятор</Link>
         </div>
       </footer>

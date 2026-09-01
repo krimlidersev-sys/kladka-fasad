@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { siteName, siteUrl } from '@/lib/site';
+import { regionalLinks, siteName, siteUrl } from '@/lib/site';
 
 type WorkType = 'masonry' | 'facade';
 
@@ -63,7 +63,11 @@ const homeJsonLd = {
       url: siteUrl,
       logo: `${siteUrl}/logo-101.png`,
       image: `${siteUrl}/og.png`,
-      description: 'Бригады каменщиков и фасадчиков для строительства многоквартирных домов.',
+      description: 'Кладка и фасадные работы для многоквартирных домов в Севастополе и Крыму.',
+      areaServed: [
+        { '@type': 'City', name: 'Севастополь' },
+        { '@type': 'AdministrativeArea', name: 'Республика Крым' },
+      ],
     },
     {
       '@type': 'WebSite',
@@ -80,6 +84,10 @@ const homeJsonLd = {
       url: siteUrl,
       provider: { '@id': `${siteUrl}/#organization` },
       audience: { '@type': 'BusinessAudience', audienceType: 'Генеральные подрядчики и застройщики' },
+      areaServed: [
+        { '@type': 'City', name: 'Севастополь' },
+        { '@type': 'AdministrativeArea', name: 'Республика Крым' },
+      ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Строительные бригады',
@@ -180,13 +188,13 @@ export default function Home() {
             <div className="absolute -left-20 -top-24 size-72 rounded-full bg-primary/10 blur-3xl" />
             <div className="reveal-up relative inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/7 px-3 py-2 text-xs font-medium text-white/72">
               <span className="pulse-dot size-2 rounded-full bg-primary" />
-              Бригады для строительства МКД
+              Работаем в Севастополе и по Крыму
             </div>
             <h1 className="reveal-up-delay relative mt-7 max-w-[620px] text-[clamp(2.55rem,5vw,4.8rem)] font-semibold leading-[0.98] tracking-[-0.045em]">
-              Бригада каменщиков и фасадчиков под ваш график
+              Кладка и фасадные работы в Севастополе и Крыму
             </h1>
             <p className="reveal-up-delay-2 relative mt-7 max-w-xl text-lg leading-7 text-white/62">
-              Каменщики и фасадчики для многоквартирных домов. Посчитаем состав бригады, ориентировочную стоимость и выйдем на объект по согласованному графику.
+              Бригады каменщиков и фасадчиков для многоквартирных домов: кладка газоблока и кирпича, мокрые и вентилируемые фасады. Рассчитаем состав, стоимость и график выхода на объект.
             </p>
             <div className="reveal-up-delay-2 relative mt-10 grid max-w-xl grid-cols-3 gap-3">
               <div>
@@ -394,6 +402,25 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-[#efefef] py-16 sm:py-20" aria-labelledby="region-title">
+        <div className="mx-auto max-w-[1180px] px-5 sm:px-8">
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <p className="section-kicker">География работ</p>
+              <h2 id="region-title" className="mt-3 text-4xl font-semibold tracking-[-0.035em]">Строительные бригады в Севастополе и Крыму</h2>
+              <p className="mt-5 max-w-md leading-7 text-muted-foreground">Рассматриваем объекты в Севастополе и населённых пунктах Крыма. Условия мобилизации и состав ИТР рассчитываем по адресу, объёму и графику строительства.</p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {regionalLinks.map((item) => (
+                <Link key={item.href} href={item.href} className="soft-transition flex min-h-28 items-center justify-between rounded-xl border border-[#dedee0] bg-white p-6 font-semibold hover:-translate-y-1 hover:border-[#bdbdc1]">
+                  {item.label}<ArrowRight className="size-5 shrink-0 text-[#77777b]" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="faq" className="bg-[#efefef] py-16 sm:py-24">
         <div className="mx-auto max-w-[900px] px-5 sm:px-8">
           <p className="section-kicker">Вопросы о бригадах</p>
@@ -449,6 +476,8 @@ export default function Home() {
           <nav className="flex gap-4 text-xs text-[#6f6f73]" aria-label="Услуги">
             <Link href="/brigada-kamenshchikov" className="hover:text-[#2a2a2c]">Каменщики</Link>
             <Link href="/brigada-fasadchikov" className="hover:text-[#2a2a2c]">Фасадчики</Link>
+            <Link href="/kladka-gazobloka-sevastopol" className="hover:text-[#2a2a2c]">Севастополь</Link>
+            <Link href="/fasadnye-raboty-krym" className="hover:text-[#2a2a2c]">Крым</Link>
           </nav>
         </div>
       </footer>
