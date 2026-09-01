@@ -386,7 +386,7 @@ export default function Home() {
                   </div>
                   <h3 className="mt-9 text-xl font-semibold">{title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">{description}</p>
-                  <Link href={href} className="soft-transition mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#2a2a2c] hover:gap-3">Подробнее <ArrowRight className="size-4" /></Link>
+                  <a href={href} className="soft-transition mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#2a2a2c] hover:gap-3">Подробнее <ArrowRight className="size-4" /></a>
                 </article>
               ))}
             </div>
