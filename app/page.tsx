@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { siteName, siteUrl } from '@/lib/site';
 
 type WorkType = 'masonry' | 'facade';
 
@@ -33,6 +34,72 @@ const workData = {
   masonry: { label: 'Каменная кладка', productivity: 7, rate: 2900 },
   facade: { label: 'Фасадные работы', productivity: 10, rate: 2600 },
 } satisfies Record<WorkType, { label: string; productivity: number; rate: number }>;
+
+const homeFaq = [
+  {
+    question: 'Как рассчитать количество каменщиков или фасадчиков?',
+    answer: 'Укажите вид работ, площадь и срок. Калькулятор покажет предварительный состав бригады. Точный расчёт делаем по проекту, ведомости объёмов и календарному графику.',
+  },
+  {
+    question: 'Какие файлы можно отправить для расчёта?',
+    answer: 'Принимаем PDF, DWG, DXF, Excel и архивы до 25 МБ. Подойдут рабочая документация, планы, узлы, спецификации и ведомость объёмов.',
+  },
+  {
+    question: 'От чего зависит стоимость работ?',
+    answer: 'Стоимость зависит от технологии, материала, сложности узлов, этажности, организации фронта работ и требуемого срока. Предварительный ориентир уточняется после изучения проекта.',
+  },
+  {
+    question: 'Для каких объектов комплектуются бригады?',
+    answer: 'Основная специализация — строительство многоквартирных домов: каменная кладка, перегородки, вентилируемые и мокрые фасады, утепление и облицовка.',
+  },
+];
+
+const homeJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: siteName,
+      url: siteUrl,
+      logo: `${siteUrl}/favicon.svg`,
+      image: `${siteUrl}/og.png`,
+      description: 'Бригады каменщиков и фасадчиков для строительства многоквартирных домов.',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: siteName,
+      url: siteUrl,
+      inLanguage: 'ru-RU',
+      publisher: { '@id': `${siteUrl}/#organization` },
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${siteUrl}/#service`,
+      name: 'Бригады каменщиков и фасадчиков для МКД',
+      url: siteUrl,
+      provider: { '@id': `${siteUrl}/#organization` },
+      audience: { '@type': 'BusinessAudience', audienceType: 'Генеральные подрядчики и застройщики' },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Строительные бригады',
+        itemListElement: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Бригада каменщиков', url: `${siteUrl}/brigada-kamenshchikov` } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Бригада фасадчиков', url: `${siteUrl}/brigada-fasadchikov` } },
+        ],
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: homeFaq.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    },
+  ],
+};
 
 function formatMoney(value: number) {
   return new Intl.NumberFormat('ru-RU', {
@@ -90,6 +157,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }} />
       <header className="border-b border-white/10 bg-[#171915] text-white">
         <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-5 sm:px-8">
           <a href="#top" className="flex items-center gap-3" aria-label="Главная">
@@ -99,7 +167,8 @@ export default function Home() {
             <span className="text-[15px] font-black tracking-[0.13em]">КЛАДКА / ФАСАД</span>
           </a>
           <div className="hidden items-center gap-8 text-sm text-white/65 md:flex">
-            <a href="#services" className="transition hover:text-white">Компетенции</a>
+            <a href="/brigada-kamenshchikov" className="transition hover:text-white">Каменщики</a>
+            <a href="/brigada-fasadchikov" className="transition hover:text-white">Фасадчики</a>
             <a href="#process" className="transition hover:text-white">Как работаем</a>
           </div>
           <a href="#calculation" className="flex items-center gap-2 text-sm font-semibold text-accent">
@@ -116,7 +185,7 @@ export default function Home() {
               Бригады для МКД
             </div>
             <h1 className="max-w-[650px] text-[clamp(2.7rem,6vw,5.8rem)] font-black leading-[0.92] tracking-[-0.055em] text-[#171915]">
-              Люди под ваш график строительства
+              Бригада каменщиков и фасадчиков под ваш график
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-[#5f615b]">
               Каменщики и фасадчики для многоквартирных домов. Посчитаем состав бригады, ориентировочную стоимость и выйдем на объект по согласованному графику.
@@ -292,11 +361,11 @@ export default function Home() {
             </div>
             <div className="grid gap-px bg-border sm:grid-cols-2">
               {[
-                ['01', 'Каменная кладка', 'Наружные и внутренние стены, перегородки, заполнение монолитного каркаса.'],
-                ['02', 'Фасадные системы', 'Мокрые и навесные фасады, утепление, облицовка и подсистема.'],
-                ['03', 'Управление бригадой', 'ИТР на объекте, ежедневная выработка, табели и контроль качества.'],
-                ['04', 'Мобилизация', 'Комплектуем бригаду под этап и график производства работ.'],
-              ].map(([number, title, description]) => (
+                ['01', 'Каменная кладка', 'Наружные и внутренние стены, перегородки, заполнение монолитного каркаса.', '/brigada-kamenshchikov'],
+                ['02', 'Фасадные системы', 'Мокрые и навесные фасады, утепление, облицовка и подсистема.', '/brigada-fasadchikov'],
+                ['03', 'Управление бригадой', 'ИТР на объекте, ежедневная выработка, табели и контроль качества.', '#process'],
+                ['04', 'Мобилизация', 'Комплектуем бригаду под этап и график производства работ.', '#calculation'],
+              ].map(([number, title, description, href]) => (
                 <article key={number} className="min-h-52 bg-[#f6f5f0] p-6 sm:p-8">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-black text-primary">{number}</span>
@@ -304,9 +373,30 @@ export default function Home() {
                   </div>
                   <h3 className="mt-9 text-xl font-black">{title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">{description}</p>
+                  <a href={href} className="mt-5 inline-flex items-center gap-2 text-sm font-black text-primary">Подробнее <ArrowRight className="size-4" /></a>
                 </article>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="bg-[#f2f0e9] py-16 sm:py-20">
+        <div className="mx-auto max-w-[900px] px-5 sm:px-8">
+          <p className="section-kicker">Вопросы о бригадах</p>
+          <h2 className="mt-3 text-4xl font-black tracking-[-0.035em]">Расчёт каменщиков и фасадчиков на объект</h2>
+          <p className="mt-5 max-w-3xl text-base leading-7 text-muted-foreground">
+            Предварительный калькулятор помогает оценить потребность в рабочих и бюджет. Для коммерческого предложения приложите проект — специалист проверит объёмы, технологию и график.
+          </p>
+          <div className="mt-9 divide-y divide-[#c9c6bb] border-y border-[#c9c6bb]">
+            {homeFaq.map((item) => (
+              <details key={item.question} className="group py-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-black">
+                  {item.question}<span className="text-primary group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">{item.answer}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
@@ -343,6 +433,10 @@ export default function Home() {
             КЛАДКА / ФАСАД
           </div>
           <p className="text-xs text-white/40">Комплектование строительных бригад для многоквартирных домов</p>
+          <nav className="flex gap-4 text-xs text-white/50" aria-label="Услуги">
+            <a href="/brigada-kamenshchikov" className="hover:text-white">Каменщики</a>
+            <a href="/brigada-fasadchikov" className="hover:text-white">Фасадчики</a>
+          </nav>
         </div>
       </footer>
     </main>
