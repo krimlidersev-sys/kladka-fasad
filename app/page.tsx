@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { regionalLinks, siteName, siteUrl } from '@/lib/site';
+import { regionalLinks, siteName, sitePhone, sitePhoneDisplay, siteUrl } from '@/lib/site';
 
 type WorkType = 'masonry' | 'facade';
 
@@ -63,6 +63,7 @@ const homeJsonLd = {
       url: siteUrl,
       logo: `${siteUrl}/logo-101.png`,
       image: `${siteUrl}/og.png`,
+      telephone: sitePhone,
       description: 'Кладка и фасадные работы для многоквартирных домов в Севастополе и Крыму.',
       areaServed: [
         { '@type': 'City', name: 'Севастополь' },
@@ -83,6 +84,7 @@ const homeJsonLd = {
       name: 'Бригады каменщиков и фасадчиков для МКД',
       url: siteUrl,
       provider: { '@id': `${siteUrl}/#organization` },
+      telephone: sitePhone,
       audience: { '@type': 'BusinessAudience', audienceType: 'Генеральные подрядчики и застройщики' },
       areaServed: [
         { '@type': 'City', name: 'Севастополь' },
@@ -176,9 +178,14 @@ export default function Home() {
             <Link href="/brigada-fasadchikov" className="soft-transition rounded-lg px-3 py-2 hover:bg-white">Фасадчики</Link>
             <a href="#process" className="soft-transition rounded-lg px-3 py-2 hover:bg-white">Как работаем</a>
           </div>
-          <a href="#calculation" className="soft-transition flex items-center gap-2 rounded-lg bg-[#2a2a2c] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#414145]">
-            <span className="hidden sm:inline">Рассчитать объект</span><span className="sm:hidden">Расчёт</span> <ArrowRight className="size-4" />
-          </a>
+          <div className="flex items-center gap-2">
+            <a href={`tel:${sitePhone}`} className="soft-transition flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-[#2a2a2c] hover:bg-white sm:px-3" aria-label={`Позвонить ${sitePhoneDisplay}`}>
+              <Phone className="size-4" /><span className="hidden lg:inline">{sitePhoneDisplay}</span>
+            </a>
+            <a href="#calculation" className="soft-transition flex items-center gap-2 rounded-lg bg-[#2a2a2c] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#414145]">
+              <span className="hidden sm:inline">Рассчитать объект</span><span className="sm:hidden">Расчёт</span> <ArrowRight className="size-4" />
+            </a>
+          </div>
         </div>
       </header>
 
@@ -472,7 +479,7 @@ export default function Home() {
             <img src="/logo-101.png" alt="101" width="32" height="32" className="size-8 rounded-lg" />
             КЛАДКА / ФАСАД <span className="font-normal text-[#8a8a8e]">— команда 101</span>
           </div>
-          <p className="text-xs text-[#8a8a8e]">Комплектование строительных бригад для многоквартирных домов</p>
+          <a href={`tel:${sitePhone}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[#2a2a2c] hover:underline"><Phone className="size-4" />{sitePhoneDisplay}</a>
           <nav className="flex gap-4 text-xs text-[#6f6f73]" aria-label="Услуги">
             <Link href="/brigada-kamenshchikov" className="hover:text-[#2a2a2c]">Каменщики</Link>
             <Link href="/brigada-fasadchikov" className="hover:text-[#2a2a2c]">Фасадчики</Link>

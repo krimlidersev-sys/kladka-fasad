@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight, Check, FileText, Ruler, Users } from 'lucide-react';
 import Link from 'next/link';
-import { siteName, siteUrl } from '@/lib/site';
+import { siteName, sitePhone, sitePhoneDisplay, siteUrl } from '@/lib/site';
 
 export type ServicePageData = {
   path: string;
@@ -29,6 +29,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         provider: { '@type': 'Organization', name: siteName, url: siteUrl },
         description: data.description,
         url: pageUrl,
+        telephone: sitePhone,
         areaServed: (data.areaServed ?? ['Севастополь', 'Республика Крым']).map((name) => ({
           '@type': 'AdministrativeArea',
           name,
@@ -62,9 +63,14 @@ export function ServicePage({ data }: { data: ServicePageData }) {
             <img src="/logo-101.png" alt="101" width="36" height="36" className="size-9 rounded-xl shadow-[0_4px_16px_rgba(255,214,0,.28)]" />
             <span><span className="block text-[15px] font-bold leading-none">КЛАДКА / ФАСАД</span><span className="mt-1 block text-[10px] text-[#77777b]">команда 101</span></span>
           </Link>
-          <Link href="/#calculation" className="soft-transition flex items-center gap-2 rounded-lg bg-[#2a2a2c] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#414145]">
-            <span className="hidden sm:inline">Рассчитать объект</span><span className="sm:hidden">Расчёт</span> <ArrowRight className="size-4" />
-          </Link>
+          <div className="flex items-center gap-2">
+            <a href={`tel:${sitePhone}`} className="soft-transition flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-[#2a2a2c] hover:bg-white sm:px-3" aria-label={`Позвонить ${sitePhoneDisplay}`}>
+              <span aria-hidden="true">☎</span><span className="hidden lg:inline">{sitePhoneDisplay}</span>
+            </a>
+            <Link href="/#calculation" className="soft-transition flex items-center gap-2 rounded-lg bg-[#2a2a2c] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#414145]">
+              <span className="hidden sm:inline">Рассчитать объект</span><span className="sm:hidden">Расчёт</span> <ArrowRight className="size-4" />
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -158,7 +164,10 @@ export function ServicePage({ data }: { data: ServicePageData }) {
       <footer className="bg-[#efefef]">
         <div className="mx-auto flex max-w-[1180px] flex-col gap-4 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <div className="flex items-center gap-3 text-sm font-semibold"><img src="/logo-101.png" alt="101" width="32" height="32" className="size-8 rounded-lg" />КЛАДКА / ФАСАД <span className="font-normal text-[#8a8a8e]">— команда 101</span></div>
-          <Link href="/" className="text-xs text-[#6f6f73] hover:text-[#2a2a2c]">Все услуги и калькулятор</Link>
+          <div className="flex flex-wrap items-center gap-4">
+            <a href={`tel:${sitePhone}`} className="text-sm font-semibold text-[#2a2a2c] hover:underline">{sitePhoneDisplay}</a>
+            <Link href="/" className="text-xs text-[#6f6f73] hover:text-[#2a2a2c]">Все услуги и калькулятор</Link>
+          </div>
         </div>
       </footer>
     </main>
