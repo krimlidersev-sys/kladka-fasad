@@ -64,6 +64,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
             <span><span className="block text-[15px] font-bold leading-none">КЛАДКА / ФАСАД</span><span className="mt-1 block text-[10px] text-[#77777b]">команда 101</span></span>
           </Link>
           <div className="flex items-center gap-2">
+            <Link href="/novosti" className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[#555559] hover:bg-white md:inline-flex">Новости</Link>
             <a href={`tel:${sitePhone}`} className="soft-transition flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-[#2a2a2c] hover:bg-white sm:px-3" aria-label={`Позвонить ${sitePhoneDisplay}`}>
               <span aria-hidden="true">☎</span><span className="hidden lg:inline">{sitePhoneDisplay}</span>
             </a>
@@ -166,6 +167,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
           <div className="flex items-center gap-3 text-sm font-semibold"><img src="/logo-101.png" alt="101" width="32" height="32" className="size-8 rounded-lg" />КЛАДКА / ФАСАД <span className="font-normal text-[#8a8a8e]">— команда 101</span></div>
           <div className="flex flex-wrap items-center gap-4">
             <a href={`tel:${sitePhone}`} className="text-sm font-semibold text-[#2a2a2c] hover:underline">{sitePhoneDisplay}</a>
+            <Link href="/novosti" className="text-xs text-[#6f6f73] hover:text-[#2a2a2c]">Новости</Link>
             <Link href="/" className="text-xs text-[#6f6f73] hover:text-[#2a2a2c]">Все услуги и калькулятор</Link>
           </div>
         </div>

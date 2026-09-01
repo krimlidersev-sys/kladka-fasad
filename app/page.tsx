@@ -176,6 +176,7 @@ export default function Home() {
           <div className="hidden items-center gap-2 text-sm md:flex">
             <Link href="/brigada-kamenshchikov" className="soft-transition rounded-lg px-3 py-2 hover:bg-white">Каменщики</Link>
             <Link href="/brigada-fasadchikov" className="soft-transition rounded-lg px-3 py-2 hover:bg-white">Фасадчики</Link>
+            <Link href="/novosti" className="soft-transition rounded-lg px-3 py-2 hover:bg-white">Новости</Link>
             <a href="#process" className="soft-transition rounded-lg px-3 py-2 hover:bg-white">Как работаем</a>
           </div>
           <div className="flex items-center gap-2">
@@ -485,6 +486,7 @@ export default function Home() {
             <Link href="/brigada-fasadchikov" className="hover:text-[#2a2a2c]">Фасадчики</Link>
             <Link href="/kladka-gazobloka-sevastopol" className="hover:text-[#2a2a2c]">Севастополь</Link>
             <Link href="/fasadnye-raboty-krym" className="hover:text-[#2a2a2c]">Крым</Link>
+            <Link href="/novosti" className="hover:text-[#2a2a2c]">Новости</Link>
           </nav>
         </div>
       </footer>
