@@ -221,7 +221,7 @@ export default function Home() {
                   Вид работ
                   <Select value={workType} onValueChange={(value) => setWorkType(value as WorkType)}>
                     <SelectTrigger id="work-type" className="mt-2 h-12 w-full rounded-lg border-[#dedee0] bg-[#f9f9f9] px-4 text-base font-medium">
-                      <SelectValue />
+                      <SelectValue>{workData[workType].label}</SelectValue>
                     </SelectTrigger>
                     <SelectContent align="start">
                       <SelectItem value="masonry">Каменная кладка</SelectItem>
