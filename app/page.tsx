@@ -50,6 +50,8 @@ export default function Home() {
   const [phone, setPhone] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const estimate = useMemo(() => {
@@ -61,9 +63,29 @@ export default function Home() {
     return { people, total };
   }, [workType, volume, days]);
 
-  function submitRequest(event: React.FormEvent<HTMLFormElement>) {
+  async function submitRequest(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSent(true);
+    setSending(true);
+    setSubmitError('');
+
+    const form = new FormData();
+    form.set('workType', workType);
+    form.set('volume', String(volume));
+    form.set('days', String(days));
+    form.set('address', address);
+    form.set('phone', phone);
+    if (file) form.set('project', file);
+
+    try {
+      const response = await fetch('/api/leads', { method: 'POST', body: form });
+      const result = (await response.json()) as { error?: string };
+      if (!response.ok) throw new Error(result.error || 'Не удалось отправить заявку.');
+      setSent(true);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Не удалось отправить заявку.');
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -248,10 +270,11 @@ export default function Home() {
                   </div>
                 </div>
               ) : (
-                <Button type="submit" size="lg" className="mt-6 h-14 w-full rounded-none bg-primary px-6 text-base font-black text-primary-foreground shadow-none hover:bg-[#a84628]">
-                  Получить точный расчёт <ArrowRight className="ml-2 size-5" />
+                <Button disabled={sending} type="submit" size="lg" className="mt-6 h-14 w-full rounded-none bg-primary px-6 text-base font-black text-primary-foreground shadow-none hover:bg-[#a84628]">
+                  {sending ? 'Отправляем заявку…' : 'Получить точный расчёт'} {!sending && <ArrowRight className="ml-2 size-5" />}
                 </Button>
               )}
+              {submitError && <p role="alert" className="mt-3 text-center text-sm font-semibold text-destructive">{submitError}</p>}
               <p className="mt-3 text-center text-xs leading-relaxed text-muted-foreground">
                 Ориентир рассчитан по средним нормативам. Точная цена и состав бригады — после изучения проекта.
               </p>
