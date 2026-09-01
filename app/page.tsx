@@ -61,7 +61,7 @@ const homeJsonLd = {
       '@id': `${siteUrl}/#organization`,
       name: siteName,
       url: siteUrl,
-      logo: `${siteUrl}/favicon.svg`,
+      logo: `${siteUrl}/logo-101.png`,
       image: `${siteUrl}/og.png`,
       description: 'Бригады каменщиков и фасадчиков для строительства многоквартирных домов.',
     },
@@ -160,7 +160,7 @@ export default function Home() {
       <header className="sticky top-0 z-40 border-b border-[#dedee0] bg-[#efefef]/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-5 sm:px-8">
           <a href="#top" className="flex items-center gap-3" aria-label="Главная">
-            <span className="grid size-9 place-items-center rounded-xl bg-primary text-sm font-black text-[#2a2a2c] shadow-[0_4px_16px_rgba(255,214,0,.28)]">101</span>
+            <img src="/logo-101.png" alt="101" width="36" height="36" className="size-9 rounded-xl shadow-[0_4px_16px_rgba(255,214,0,.28)]" />
             <span><span className="block text-[15px] font-bold leading-none">КЛАДКА / ФАСАД</span><span className="mt-1 block text-[10px] text-[#77777b]">команда 101</span></span>
           </a>
           <div className="hidden items-center gap-2 text-sm md:flex">
@@ -442,7 +442,7 @@ export default function Home() {
       <footer className="mt-6 bg-[#efefef]">
         <div className="mx-auto flex max-w-[1180px] flex-col gap-4 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <div className="flex items-center gap-3 text-sm font-semibold">
-            <span className="grid size-8 place-items-center rounded-lg bg-primary text-xs font-black text-[#2a2a2c]">101</span>
+            <img src="/logo-101.png" alt="101" width="32" height="32" className="size-8 rounded-lg" />
             КЛАДКА / ФАСАД <span className="font-normal text-[#8a8a8e]">— команда 101</span>
           </div>
           <p className="text-xs text-[#8a8a8e]">Комплектование строительных бригад для многоквартирных домов</p>

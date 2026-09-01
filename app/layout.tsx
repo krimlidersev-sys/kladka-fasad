@@ -54,7 +54,10 @@ export const metadata: Metadata = {
     description: 'Расчёт состава бригады, стоимости и сроков выхода на объект по проекту.',
     images: [`${siteUrl}/og.png`],
   },
-  icons: { icon: '/favicon.svg' },
+  icons: {
+    icon: [{ url: '/favicon.png', type: 'image/png', sizes: '256x256' }],
+    apple: [{ url: '/logo-101.png', type: 'image/png', sizes: '512x512' }],
+  },
   category: 'construction',
 };
 
