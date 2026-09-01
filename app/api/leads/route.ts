@@ -5,6 +5,8 @@ export const runtime = 'edge';
 
 const allowedExtensions = new Set(['pdf', 'dwg', 'dxf', 'zip', 'rar', 'xlsx', 'xls']);
 const maxFileSize = 25 * 1024 * 1024;
+const maxEmailAttachmentSize = 10 * 1024 * 1024;
+const leadEmail = 'krim.lidersev@gmail.com';
 
 function numberField(form: FormData, name: string) {
   const value = Number(form.get(name));
@@ -79,6 +81,41 @@ export async function POST(request: Request) {
         await files.delete(fileKey);
       }
       throw error;
+    }
+
+    try {
+      const notification = new FormData();
+      notification.set('_subject', `Новая заявка с сайта: ${workType === 'facade' ? 'фасад' : 'кладка'}`);
+      notification.set('_template', 'table');
+      notification.set('_captcha', 'false');
+      notification.set('Тип работ', workType === 'facade' ? 'Фасадные работы' : 'Кладка газоблока');
+      notification.set('Объём', `${volume} ${workType === 'facade' ? 'м²' : 'м³'}`);
+      notification.set('Срок выполнения', `${days} дней`);
+      notification.set('Расчётная бригада', `${people} человек`);
+      notification.set('Предварительная стоимость', `${estimateAmount.toLocaleString('ru-RU')} ₽`);
+      notification.set('Адрес объекта', address);
+      notification.set('Телефон заказчика', phone);
+      notification.set('Номер заявки', id);
+      notification.set('Дата заявки', new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }));
+
+      if (fileName) {
+        notification.set('Файл проекта', fileName);
+      }
+      if (attachment instanceof File && attachment.size > 0 && attachment.size <= maxEmailAttachmentSize) {
+        notification.set('attachment', attachment, attachment.name);
+      }
+
+      const emailResponse = await fetch(`https://formsubmit.co/ajax/${leadEmail}`, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: notification,
+      });
+
+      if (!emailResponse.ok) {
+        console.error('Lead email notification failed', emailResponse.status, await emailResponse.text());
+      }
+    } catch (emailError) {
+      console.error('Lead email notification failed', emailError);
     }
 
     return Response.json({ ok: true, id, people, estimateAmount });
