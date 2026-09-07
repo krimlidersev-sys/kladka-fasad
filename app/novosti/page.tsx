@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/site-link';
 import { ArrowLeft, ArrowRight, CalendarDays, Phone } from 'lucide-react';
 import { newsArticles } from '@/lib/news';
 import { siteName, sitePhone, sitePhoneDisplay, siteUrl } from '@/lib/site';

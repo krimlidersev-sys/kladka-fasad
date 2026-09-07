@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, Check, FileText, Ruler, Users } from 'lucide-react';
-import Link from 'next/link';
+import Link from '@/components/site-link';
 import { siteName, sitePhone, sitePhoneDisplay, siteUrl } from '@/lib/site';
 
 export type ServicePageData = {
