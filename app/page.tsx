@@ -210,7 +210,7 @@ export default function Home() {
                 <div className="mt-1 text-xs leading-4 text-white/45">на расчёт проекта</div>
               </div>
               <div className="border-l border-white/12 pl-4">
-                <div className="text-2xl font-semibold text-primary">от 12</div>
+                <div className="text-2xl font-semibold text-primary">от 4</div>
                 <div className="mt-1 text-xs leading-4 text-white/45">человек в бригаде</div>
               </div>
               <div className="border-l border-white/12 pl-4">
